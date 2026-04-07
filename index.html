@@ -1,0 +1,233 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MangaBookStore — читай манґу українською</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        
+        .updates-with-images {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .update-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #0f1117;
+            border-radius: 12px;
+            padding: 10px;
+            border: 1px solid #1f232b;
+            transition: background 0.2s;
+        }
+
+            .update-item:hover {
+                background: #1a1e26;
+            }
+
+        .update-cover {
+            width: 50px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .update-info {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+            .update-info a {
+                text-decoration: none;
+                font-weight: 500;
+                color: #eef2ff;
+            }
+
+                .update-info a:hover {
+                    color: #ff8c42;
+                }
+
+        .update-date {
+            font-size: 0.8rem;
+            color: #8e99b0;
+        }
+
+        @media (max-width: 768px) {
+            .update-item {
+                flex-wrap: wrap;
+            }
+
+            .update-info {
+                width: 100%;
+                margin-top: 8px;
+                justify-content: space-between;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">Manga<span>BookStore</span></a>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html" class="active">Головна</a></li>
+                    <li><a href="catalog.html">Каталог</a></li>
+                    <li><a href="bookmarks.html">Закладки</a></li>
+                    <li><a href="top.html">Топи</a></li>
+                </ul>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="Пошук манґи..." id="globalSearch">
+            </div>
+            <div class="auth-buttons">
+                <a href="#" class="btn-outline">Вхід</a>
+                <a href="#" class="btn-primary">Реєстрація</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Читай манґу українською</h1>
+                <p>Найбільша колекція японської манґи у перекладі. Оновлення щодня.</p>
+                <a href="catalog.html" class="btn-hero">До каталогу</a>
+            </div>
+        </section>
+
+        <div class="container">
+            <section class="section">
+                <div class="section-header">
+                    <h2>Популярне цього тижня</h2>
+                    <a href="catalog.html" class="link-all">Всі тайтли →</a>
+                </div>
+                <div class="manga-grid" id="popularGrid"></div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2>Нові розділи</h2>
+                    <a href="#" class="link-all">Більше →</a>
+                </div>
+                <div class="manga-grid" id="newGrid"></div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2>Рекомендуємо</h2>
+                    <a href="#" class="link-all">Всі →</a>
+                </div>
+                <div class="manga-grid" id="recGrid"></div>
+            </section>
+
+            <section class="section">
+                <div class="section-header">
+                    <h2>Останні оновлення</h2>
+                    <a href="#" class="link-all">Більше →</a>
+                </div>
+                <div class="updates-with-images" id="updatesList"></div>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-logo">MangaBookStore</div>
+            <div class="footer-links">
+                <a href="#">Про нас</a>
+                <a href="#">Правила</a>
+                <a href="#">Підтримка</a>
+                <a href="#">API</a>
+            </div>
+            <div class="footer-copy">© 2025 MangaBookStore. Всі права захищені.</div>
+        </div>
+    </footer>
+
+    <script>
+        
+        const mangaList = [
+            
+            { id: 1, title: "Берсерк", chapter: "Розділ 374", rating: "4.9", cover: "images/berserk.webp" },
+            { id: 2, title: "Ван Піс", chapter: "Розділ 1088", rating: "4.8", cover: "images/One_piec.jpg" },
+            { id: 3, title: "Дзюдзюцу Кайсен", chapter: "Розділ 256", rating: "4.7", cover: "images/jujutsu.webp" },
+            { id: 4, title: "Атака Титанів", chapter: "Розділ 139", rating: "4.9", cover: "images/attack.png" },
+            { id: 5, title: "Ванпанчмен", chapter: "Розділ 204", rating: "4.6", cover: "images/onepunchman.jfif" },
+            { id: 6, title: "Токійські месники", chapter: "Розділ 278", rating: "4.5", cover: "images/tokyorev.jpg" },
+            
+            { id: 7, title: "Людина-бензопила", chapter: "Розділ 167", rating: "4.8", cover: "images/chainsaw-man.jpg" },
+            { id: 8, title: "Соло Левлінг", chapter: "Розділ 179", rating: "4.9", cover: "images/sololeveling.jfif" },
+            { id: 9, title: "Моя геройська академія", chapter: "Розділ 410", rating: "4.7", cover: "images/myheroacademia.jpg" },
+            { id: 10, title: "Сага про Вінланд", chapter: "Розділ 208", rating: "4.9", cover: "images/vinland.jpg" },
+            { id: 11, title: "Кайдзю №8", chapter: "Розділ 112", rating: "4.6", cover: "images/kaiju.jpg" },
+            { id: 12, title: "Дандадан", chapter: "Розділ 150", rating: "4.8", cover: "images/dandadan.jpg" },
+            
+            { id: 13, title: "Фрірен", chapter: "Розділ 120", rating: "4.9", cover: "images/frieren.webp" },
+            { id: 14, title: "Оші но Ко", chapter: "Розділ 150", rating: "4.7", cover: "images/oshinoko.jpg" },
+            { id: 15, title: "Шпигун x Родина", chapter: "Розділ 95", rating: "4.8", cover: "images/spyfamily.webp" },
+            { id: 16, title: "Убивця Демонів", chapter: "Розділ 205", rating: "4.8", cover: "images/demonslayer.webp" },
+            { id: 17, title: "Наруто", chapter: "Розділ 700", rating: "4.7", cover: "images/naruto.webp" },
+            { id: 18, title: "Бліч", chapter: "Розділ 686", rating: "4.6", cover: "images/Bleach.png" }
+        ];
+
+        function createCard(manga) {
+            const card = document.createElement('a');
+            card.href = `title.html?id=${manga.id}`;
+            card.className = 'manga-card';
+            card.innerHTML = `
+                        <div class="card-cover">
+                            <img src="${manga.cover}" alt="${manga.title}">
+                        </div>
+                        <div class="card-info">
+                            <h3>${manga.title}</h3>
+                            <p>${manga.chapter}</p>
+                            <span class="rating">⭐ ${manga.rating}</span>
+                        </div>
+                    `;
+            return card;
+        }
+
+        
+        const popularGrid = document.getElementById('popularGrid');
+        mangaList.slice(0, 6).forEach(m => popularGrid.appendChild(createCard(m)));
+
+        const newGrid = document.getElementById('newGrid');
+        mangaList.slice(6, 12).forEach(m => newGrid.appendChild(createCard(m)));
+
+        const recGrid = document.getElementById('recGrid');
+        mangaList.slice(12, 18).forEach(m => recGrid.appendChild(createCard(m)));
+
+        
+        const updatesData = [
+            { title: "Берсерк", chapter: "Розділ 374", date: "сьогодні", cover: "images/berserk.webp" },
+            { title: "Ван Піс", chapter: "Розділ 1088", date: "вчора", cover: "images/One_piec.jpg" },
+            { title: "Дзюдзюцу Кайсен", chapter: "Розділ 256", date: "2 дні тому", cover: "images/jujutsu.webp" },
+            { title: "Людина-бензопила", chapter: "Розділ 167", date: "3 дні тому", cover: "images/chainsaw-man.jpg" },
+            { title: "Соло Левлінг", chapter: "Розділ 179", date: "5 днів тому", cover: "images/sololeveling.jfif" },
+            { title: "Моя геройська академія", chapter: "Розділ 410", date: "тиждень тому", cover: "images/myheroacademia.jpg" }
+        ];
+
+        const updatesContainer = document.getElementById('updatesList');
+        updatesData.forEach(update => {
+            const item = document.createElement('div');
+            item.className = 'update-item';
+            item.innerHTML = `
+                        <img src="${update.cover}" alt="${update.title}" class="update-cover">
+                        <div class="update-info">
+                            <a href="#">${update.title} – ${update.chapter}</a>
+                            <span class="update-date">${update.date}</span>
+                        </div>
+                    `;
+            updatesContainer.appendChild(item);
+        });
+    </script>
+</body>
+</html>
